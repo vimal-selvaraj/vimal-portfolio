@@ -1,0 +1,218 @@
+.contact {
+  overflow: clip;
+}
+
+.contact__glow {
+  position: absolute;
+  left: 50%;
+  bottom: 0; /* fully inside the clipped section so the glow fades out instead of being cut */
+  width: min(1100px, 120vw);
+  aspect-ratio: 2 / 1;
+  translate: -50% 0;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(var(--accent-rgb), 0.14), rgba(var(--violet-rgb), 0.08) 55%, transparent);
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.contact .container {
+  position: relative;
+}
+
+.contact__label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-muted);
+}
+
+.contact__index {
+  color: var(--accent);
+}
+
+.contact__rule {
+  width: 48px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.contact__avail {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-left: auto;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+
+.contact__dot {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+}
+
+.contact__dot::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid #4ade80;
+  animation: hero-pulse 2.4s var(--ease-out) infinite;
+}
+
+.contact__title {
+  margin-top: clamp(2rem, 1rem + 3vw, 3.5rem);
+  font-size: var(--fs-hero);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+
+.contact__line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.contact__line > span {
+  display: inline-block;
+}
+
+.contact__lead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: clamp(2rem, 1rem + 3vw, 3.5rem);
+}
+
+.contact__desc {
+  max-width: 38ch;
+  font-size: var(--fs-lg);
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.contact__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.contact__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 52px;
+  padding: 0 1.4rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 0.95rem;
+  color: var(--text);
+  transition: border-color var(--dur-fast), color var(--dur-fast);
+}
+
+.contact__copy:hover {
+  border-color: var(--text);
+}
+
+.contact__copy.is-copied {
+  border-color: rgba(var(--accent-rgb), 0.6);
+  color: var(--accent);
+}
+
+/* ---------- Channel cards ---------- */
+
+.contact__channels {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) repeat(3, minmax(0, 1fr)); /* email needs the room */
+  gap: 0.75rem;
+  margin-top: clamp(3rem, 2rem + 4vw, 5rem);
+}
+
+.contact__channels > li {
+  min-width: 0;
+}
+
+.channel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1rem;
+  height: 100%;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--glass);
+  backdrop-filter: blur(10px);
+  transition: border-color var(--dur), background var(--dur), transform var(--dur) var(--ease-out);
+}
+
+.channel:hover,
+.channel:focus-visible {
+  border-color: rgba(var(--accent-rgb), 0.45);
+  background: rgba(var(--accent-rgb), 0.05);
+  transform: translateY(-3px);
+}
+
+.channel__icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-strong);
+  color: var(--accent);
+}
+
+.channel__text {
+  display: grid;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.channel__label {
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+}
+
+.channel__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-sm);
+  color: var(--text);
+}
+
+.channel__arrow {
+  color: var(--text-dim);
+  transition: transform var(--dur) var(--ease-out), color var(--dur);
+}
+
+.channel:hover .channel__arrow {
+  color: var(--accent);
+  transform: translate(2px, -2px);
+}
+
+@media (max-width: 1100px) {
+  .contact__channels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .contact__channels {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .contact__avail {
+    margin-left: 0;
+  }
+}
