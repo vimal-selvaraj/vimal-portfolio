@@ -6,8 +6,8 @@
 #
 # Required repository secrets (Settings → Secrets and variables → Actions):
 #   VERCEL_TOKEN       – vercel.com/account/settings/tokens
-#   VERCEL_ORG_ID      – "orgId" from .vercel/project.json
-#   VERCEL_PROJECT_ID  – "projectId" from .vercel/project.json
+#   VERCEL_ORG_ID      – "orgId" from .vercel/project.json   (starts with team_)
+#   VERCEL_PROJECT_ID  – "projectId" from .vercel/project.json (starts with prj_)
 
 name: Deploy to Vercel
 
@@ -21,21 +21,45 @@ concurrency:
   group: vercel-production
   cancel-in-progress: true
 
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
+
+      # Fails fast with a clear message (shown as an annotation on the run) if a secret is
+      # missing, malformed or rejected. Values are trimmed — pasted secrets often carry a
+      # stray newline — and exported for the later steps. GitHub masks them in all output.
+      - name: Check Vercel secrets
+        env:
+          RAW_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          RAW_ORG: ${{ secrets.VERCEL_ORG_ID }}
+          RAW_PROJECT: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          token=$(printf '%s' "$RAW_TOKEN" | tr -d '[:space:]')
+          org=$(printf '%s' "$RAW_ORG" | tr -d '[:space:]')
+          project=$(printf '%s' "$RAW_PROJECT" | tr -d '[:space:]')
+          fail=0
+          [ -n "$token" ] || { echo "::error title=VERCEL_TOKEN::Secret is missing or empty"; fail=1; }
+          case "$org" in team_*) ;; *) echo "::error title=VERCEL_ORG_ID::Missing or does not start with team_"; fail=1;; esac
+          case "$project" in prj_*) ;; *) echo "::error title=VERCEL_PROJECT_ID::Missing or does not start with prj_"; fail=1;; esac
+          [ "$fail" = 0 ] || exit 1
+          if ! out=$(npx --yes vercel@66.6.0 whoami --token="$token" 2>&1); then
+            echo "::error title=VERCEL_TOKEN rejected::$(printf '%s' "$out" | tail -n 3 | tr '\n' ' ')"
+            exit 1
+          fi
+          echo "::notice title=Vercel::Token accepted for account $(printf '%s' "$out" | tail -n 1)"
+          {
+            echo "VERCEL_TOKEN=$token"
+            echo "VERCEL_ORG_ID=$org"
+            echo "VERCEL_PROJECT_ID=$project"
+          } >> "$GITHUB_ENV"
 
       - name: Install
         run: npm ci
@@ -44,11 +68,22 @@ jobs:
         run: npm run lint
 
       # Pulls the production settings and env vars (e.g. VITE_SITE_URL) from Vercel.
+      # On failure, the CLI's last lines are surfaced as an annotation on the run.
       - name: Pull Vercel settings
-        run: npx --yes vercel@66.6.0 pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          npx --yes vercel@66.6.0 pull --yes --environment=production --token="$VERCEL_TOKEN" 2>&1 | tee vercel.log
+          status=${PIPESTATUS[0]}
+          [ "$status" = 0 ] || { echo "::error title=vercel pull::$(tail -n 4 vercel.log | tr '\n' ' ')"; exit "$status"; }
 
       - name: Build
-        run: npx --yes vercel@66.6.0 build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          npx --yes vercel@66.6.0 build --prod --token="$VERCEL_TOKEN" 2>&1 | tee vercel.log
+          status=${PIPESTATUS[0]}
+          [ "$status" = 0 ] || { echo "::error title=vercel build::$(tail -n 4 vercel.log | tr '\n' ' ')"; exit "$status"; }
 
       - name: Deploy to production
-        run: npx --yes vercel@66.6.0 deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          npx --yes vercel@66.6.0 deploy --prebuilt --prod --token="$VERCEL_TOKEN" 2>&1 | tee vercel.log
+          status=${PIPESTATUS[0]}
+          [ "$status" = 0 ] || { echo "::error title=vercel deploy::$(tail -n 4 vercel.log | tr '\n' ' ')"; exit "$status"; }
+          echo "::notice title=Deployed::$(grep -o 'https://[^ ]*vercel.app' vercel.log | tail -n 1)"
