@@ -6,11 +6,11 @@ import { Hero } from './sections/Hero/Hero'
 import { About } from './sections/About/About'
 import { Skills } from './sections/Skills/Skills'
 import { Experience } from './sections/Experience/Experience'
+import { Projects } from './sections/Projects/Projects'
+import { Achievements } from './sections/Achievements/Achievements'
 
 /** Sections still to be built in later phases. */
 const placeholders = [
-  { id: 'projects', index: '05', label: 'Featured Projects', title: 'Projects — Phase 5' },
-  { id: 'achievements', index: '06', label: 'Achievements', title: 'Achievements — Phase 5' },
   { id: 'contact', index: '09', label: 'Contact', title: 'Contact — Phase 6' },
 ]
 
@@ -28,6 +28,8 @@ function App() {
         <About />
         <Skills />
         <Experience />
+        <Projects />
+        <Achievements />
         {placeholders.map((p) => (
           <section key={p.id} id={p.id} className="section" aria-labelledby={`${p.id}-title`}>
             <div className="container">
