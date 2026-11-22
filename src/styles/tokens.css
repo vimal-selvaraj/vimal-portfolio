@@ -1,0 +1,53 @@
+/* Design tokens — the single place to tune colour, type, spacing and motion. */
+:root {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --bg: #07080a;
+  --bg-elev: #0d0f13;
+  --bg-elev-2: #12151b;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.16);
+  --glass: rgba(14, 16, 21, 0.62);
+
+  /* Text */
+  --text: #f2f3f5;
+  --text-muted: #9ba1ad;
+  --text-dim: #7d8390; /* ≥4.5:1 on --bg (was #626875 ≈3.5:1) */
+
+  /* Accent: electric cyan, with a restrained violet partner */
+  --accent: #3ee0ff;
+  --accent-rgb: 62, 224, 255;
+  --accent-soft: rgba(62, 224, 255, 0.12);
+  --violet: #8b6cff;
+  --violet-rgb: 139, 108, 255;
+
+  /* Type */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Inter Tight', 'Inter', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', Consolas, monospace;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+  --fs-xl: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem);
+  --fs-2xl: clamp(2.5rem, 1.6rem + 3.8vw, 5rem);
+  --fs-hero: clamp(2.75rem, 1.2rem + 6.4vw, 7.5rem);
+
+  /* Layout */
+  --container: 1280px;
+  --gutter: clamp(1.25rem, 0.8rem + 2.2vw, 3rem);
+  --section-y: clamp(5.5rem, 4rem + 7vw, 11rem);
+  --nav-h: 72px;
+  --radius-sm: 6px;
+  --radius: 12px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 180ms;
+  --dur: 360ms;
+}

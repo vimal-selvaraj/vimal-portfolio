@@ -1,0 +1,68 @@
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--bg);
+}
+
+.bg__grid {
+  position: absolute;
+  inset: -10% 0 -30%;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 88px 88px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, #000 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, #000 30%, transparent 80%);
+}
+
+.bg__glows {
+  position: absolute;
+  inset: 0;
+}
+
+.bg__glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  will-change: transform;
+}
+
+.bg__glow--cyan {
+  width: 46vmax;
+  height: 46vmax;
+  top: -22vmax;
+  right: -12vmax;
+  background: radial-gradient(circle, rgba(var(--accent-rgb), 0.16), transparent 65%);
+  animation: bg-drift 22s var(--ease-in-out) infinite alternate;
+}
+
+.bg__glow--violet {
+  width: 40vmax;
+  height: 40vmax;
+  top: 8vmax;
+  left: -18vmax;
+  background: radial-gradient(circle, rgba(var(--violet-rgb), 0.13), transparent 65%);
+  animation: bg-drift 28s var(--ease-in-out) infinite alternate-reverse;
+}
+
+.bg__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+.bg__grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@keyframes bg-drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(-6vmax, 4vmax, 0) scale(1.12); }
+}
