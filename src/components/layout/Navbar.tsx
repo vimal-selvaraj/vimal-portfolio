@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll, useSpring } fr
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { navItems, profile } from '../../data/portfolio'
 import { useActiveSection } from '../../hooks/useActiveSection'
+import { ThemeToggle } from '../ui/ThemeToggle'
 import './Navbar.css'
 
 /*
@@ -76,6 +77,7 @@ export function Navbar() {
           </nav>
 
           <div className="nav__actions">
+            <ThemeToggle />
             <a className="nav__cta" href={profile.resume} download={profile.resumeFileName}>
               Resume <ArrowUpRight size={15} aria-hidden="true" />
             </a>

@@ -7,10 +7,15 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth; /* native fallback; Lenis takes over below when active */
   scroll-padding-top: var(--nav-h);
   -webkit-text-size-adjust: 100%;
   background: var(--bg);
+}
+
+/* Lenis animates the scroll itself — CSS smoothing on top of it would make it lag. */
+html.lenis {
+  scroll-behavior: auto;
 }
 
 body {
@@ -66,7 +71,7 @@ button {
 
 ::selection {
   background: rgba(var(--accent-rgb), 0.28);
-  color: #fff;
+  color: var(--text);
 }
 
 :focus-visible {
@@ -136,7 +141,7 @@ button {
   z-index: 100;
   padding: 0.75rem 1rem;
   background: var(--accent);
-  color: #000;
+  color: var(--on-accent);
   border-radius: var(--radius-sm);
   font-weight: 600;
 }

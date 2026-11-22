@@ -2,13 +2,22 @@
 :root {
   color-scheme: dark;
 
+  /* Base ink as RGB, for tints and hairlines: rgba(var(--fg-rgb), 0.08) */
+  --fg-rgb: 255, 255, 255;
+
   /* Surfaces */
   --bg: #07080a;
   --bg-elev: #0d0f13;
   --bg-elev-2: #12151b;
-  --line: rgba(255, 255, 255, 0.08);
-  --line-strong: rgba(255, 255, 255, 0.16);
-  --glass: rgba(14, 16, 21, 0.62);
+  --surface-sunken: #0b0d11;
+  --line: rgba(var(--fg-rgb), 0.08);
+  --line-strong: rgba(var(--fg-rgb), 0.16);
+  --glass: rgba(14, 16, 21, 0.9);
+  --nav-glass: rgba(7, 8, 10, 0.92); /* opaque enough to need no backdrop blur */
+  --vignette: rgba(0, 0, 0, 0.55);
+  --shadow-rgb: 0, 0, 0;
+  --shadow-alpha: 1; /* scales every large drop shadow; light theme softens it */
+  --shade: #000; /* darkens stacked project cards */
 
   /* Text */
   --text: #f2f3f5;
@@ -18,9 +27,11 @@
   /* Accent: electric cyan, with a restrained violet partner */
   --accent: #3ee0ff;
   --accent-rgb: 62, 224, 255;
-  --accent-soft: rgba(62, 224, 255, 0.12);
+  --accent-soft: rgba(var(--accent-rgb), 0.12);
   --violet: #8b6cff;
   --violet-rgb: 139, 108, 255;
+  --on-accent: #031015; /* text on accent fills */
+  --success: #4ade80;
 
   /* Type */
   --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
@@ -50,4 +61,36 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --dur-fast: 180ms;
   --dur: 360ms;
+}
+
+/*
+ * Light theme. Accents are deepened so small text keeps ≥4.5:1 contrast on white
+ * (the bright dark-theme cyan would be ~1.6:1 here).
+ */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --fg-rgb: 12, 14, 20;
+
+  --bg: #f5f6f8;
+  --bg-elev: #ffffff;
+  --bg-elev-2: #eceef2;
+  --surface-sunken: #f1f3f6;
+  --glass: rgba(255, 255, 255, 0.92);
+  --nav-glass: rgba(245, 246, 248, 0.94);
+  --vignette: rgba(255, 255, 255, 0);
+  --shadow-rgb: 30, 36, 50;
+  --shadow-alpha: 0.18;
+  --shade: #f5f6f8;
+
+  --text: #0b0d12;
+  --text-muted: #495060;
+  --text-dim: #5c6372;
+
+  --accent: #096a85;
+  --accent-rgb: 9, 106, 133;
+  --violet: #5b3fd6;
+  --violet-rgb: 91, 63, 214;
+  --on-accent: #ffffff;
+  --success: #15803d;
 }

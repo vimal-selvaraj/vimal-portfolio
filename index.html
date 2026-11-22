@@ -6,6 +6,17 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#07080a" />
+    <!-- Apply the saved (or system) theme before first paint, so there is no flash of the wrong theme. -->
+    <script>
+      ;(function () {
+        try {
+          var t = localStorage.getItem('vs-theme')
+          if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+          document.documentElement.dataset.theme = t
+          if (t === 'light') document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f5f6f8')
+        } catch (e) {}
+      })()
+    </script>
 
     <title>Vimal Selvaraj — Full-Stack Developer | ReactJS · NodeJS · PostgreSQL</title>
     <meta
@@ -37,9 +48,9 @@
         "@type": "Person",
         "name": "Vimal Selvaraj",
         "jobTitle": "Full-Stack Developer",
-        "sameAs": ["https://www.linkedin.com/in/vimal-selvaraj-5b0716251"],
+        "sameAs": ["https://www.linkedin.com/in/vimal-selvaraj-5b0716251", "https://github.com/vimal-selvaraj"],
         "knowsAbout": ["ReactJS", "TypeScript", "NodeJS", "ExpressJS", "PostgreSQL"],
-        "alumniOf": "Anna University"
+        "alumniOf": "AVC College of Engineering (Anna University)"
       }
     </script>
 

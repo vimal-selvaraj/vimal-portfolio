@@ -83,9 +83,14 @@
 
 /* ---------- Education ---------- */
 
-.edu {
+.learn__side {
   position: sticky;
   top: calc(var(--nav-h) + 2rem);
+  display: grid;
+  gap: 1rem;
+}
+
+.edu {
   display: grid;
   gap: 0.5rem;
   padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
@@ -145,7 +150,7 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .edu {
+  .learn__side {
     position: static;
   }
 }
@@ -154,4 +159,47 @@
   .learn__topics {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* An odd number of topics: let the last one span the row instead of leaving a gap. */
+@media (min-width: 601px) {
+  .learn__topics > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+.practice {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
+  border-radius: var(--radius);
+  background: rgba(var(--accent-rgb), 0.05);
+  transition: border-color var(--dur-fast), background var(--dur-fast);
+}
+
+.practice:hover {
+  border-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.09);
+}
+
+.practice__label {
+  color: var(--accent);
+}
+
+.practice__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+.practice__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.55;
 }

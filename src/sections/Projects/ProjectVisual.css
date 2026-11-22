@@ -7,10 +7,10 @@
 
 .pv {
   --pv-play: paused;
-  --pv-surface: #0b0d11;
-  --pv-panel: rgba(255, 255, 255, 0.035);
-  --pv-ink: rgba(255, 255, 255, 0.14);
-  --pv-ink-dim: rgba(255, 255, 255, 0.07);
+  --pv-surface: var(--surface-sunken);
+  --pv-panel: rgba(var(--fg-rgb), 0.035);
+  --pv-ink: rgba(var(--fg-rgb), 0.14);
+  --pv-ink-dim: rgba(var(--fg-rgb), 0.07);
   position: relative;
   margin: 0;
 }
@@ -48,10 +48,10 @@
   margin-inline: auto;
   padding: 0.25rem 0.75rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(var(--fg-rgb), 0.04);
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  color: var(--text-dim);
+  color: var(--text-muted);
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
@@ -69,7 +69,7 @@
     radial-gradient(120% 80% at 100% 0%, rgba(var(--accent-rgb), 0.08), transparent 60%),
     radial-gradient(90% 70% at 0% 100%, rgba(var(--violet-rgb), 0.08), transparent 60%),
     var(--pv-surface);
-  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.8);
+  box-shadow: 0 40px 80px -40px rgba(var(--shadow-rgb), calc(0.8 * var(--shadow-alpha)));
 }
 
 .pv__screen > * {
@@ -141,7 +141,7 @@
 }
 
 .pv-chip--2 {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(var(--fg-rgb), 0.1);
 }
 
 .pv-kpis {
@@ -168,7 +168,7 @@
   width: 55%;
   height: 1.4em;
   border-radius: 0.3em;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(var(--fg-rgb), 0.2);
 }
 
 .pv-kpi-bar {
@@ -197,7 +197,7 @@
   gap: 1.1em;
   padding-top: 1.4em;
   border-right: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(var(--fg-rgb), 0.02);
 }
 
 .pv-logo {
@@ -276,9 +276,9 @@
   padding: 0.8em 1.1em;
   border: 1px solid rgba(var(--accent-rgb), 0.35);
   border-radius: 0.7em;
-  background: rgba(10, 12, 16, 0.9);
+  background: var(--glass);
   color: var(--accent);
-  box-shadow: 0 1.5em 3em -1em rgba(0, 0, 0, 0.7);
+  box-shadow: 0 1.5em 3em -1em rgba(var(--shadow-rgb), calc(0.7 * var(--shadow-alpha)));
   animation: pv-float 6s ease-in-out infinite;
   animation-play-state: var(--pv-play);
 }
@@ -350,7 +350,7 @@
   padding: 1.2em;
   border: 1px solid var(--line-strong);
   border-radius: 0.7em;
-  background: rgba(255, 255, 255, 0.025);
+  background: rgba(var(--fg-rgb), 0.025);
 }
 
 .pv-builder .pv-label {
@@ -446,7 +446,7 @@
   gap: 0.7em;
   padding: 0.9em;
   border-radius: 0.6em;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(var(--fg-rgb), 0.02);
   border: 1px solid var(--line);
 }
 
@@ -480,7 +480,7 @@
   left: 0.9em;
   width: calc((100% - 3em) / 4 - 1.8em);
   border-color: rgba(var(--accent-rgb), 0.6);
-  background: #0f1319;
+  background: var(--bg-elev-2);
   box-shadow: 0 1em 2.5em -0.8em rgba(var(--accent-rgb), 0.35);
   animation: pv-ticket-move 8s var(--ease-in-out) infinite;
   animation-play-state: var(--pv-play);
@@ -493,7 +493,7 @@
   padding: 0.8em 1.1em;
   border: 1px solid var(--line);
   border-radius: 0.6em;
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(var(--fg-rgb), 0.02);
   color: var(--violet);
   font-family: var(--font-mono);
   font-size: 0.9em;
@@ -510,7 +510,16 @@
   background: var(--line-strong);
 }
 
+/* The dot element spans the track and moves by transform; ::before is the visible dot. */
 .pv-bus-dot {
+  position: absolute;
+  inset: 0;
+  animation: pv-travel 2s linear infinite;
+  animation-play-state: var(--pv-play);
+}
+
+.pv-bus-dot::before {
+  content: '';
   position: absolute;
   top: 50%;
   left: 0;
@@ -520,8 +529,6 @@
   border-radius: 50%;
   background: var(--violet);
   box-shadow: 0 0 1em var(--violet);
-  animation: pv-travel 2s linear infinite;
-  animation-play-state: var(--pv-play);
 }
 
 /* ---------- Dashboard ---------- */
@@ -695,6 +702,14 @@
 
 .pv-flow-dot {
   position: absolute;
+  inset: 0;
+  animation: pv-travel 1.6s linear infinite;
+  animation-play-state: var(--pv-play);
+}
+
+.pv-flow-dot::before {
+  content: '';
+  position: absolute;
   top: 50%;
   left: 0;
   width: 0.55em;
@@ -703,8 +718,6 @@
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 0.9em var(--accent);
-  animation: pv-travel 1.6s linear infinite;
-  animation-play-state: var(--pv-play);
 }
 
 .pv-vectors {
@@ -844,10 +857,10 @@
 
 @keyframes pv-travel {
   from {
-    left: 0;
+    transform: translateX(0);
   }
   to {
-    left: 100%;
+    transform: translateX(100%);
   }
 }
 

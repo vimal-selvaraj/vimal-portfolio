@@ -1,0 +1,209 @@
+/*
+ * Orbit scene. Each ring = rotateZ(gz) rotateX(tilt) [rotateZ(spin)], and each badge's
+ * face applies the exact inverse so logos always face the viewer. Both animations share
+ * a duration, so they stay in lock-step; everything is transform-only (compositor).
+ */
+.orbit {
+  --play: paused;
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+}
+
+.orbit.is-live {
+  --play: running;
+}
+
+.orbit__scene {
+  position: relative;
+  aspect-ratio: 1;
+  perspective: 1100px;
+  transform-style: preserve-3d;
+}
+
+/* Soft glow behind everything */
+.orbit__scene::before {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(var(--accent-rgb), 0.16), rgba(var(--violet-rgb), 0.08) 60%, transparent);
+}
+
+/* ---------- Core ---------- */
+.orbit__core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.35rem;
+  width: 26cqi;
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgba(var(--accent-rgb), 0.35), transparent 60%),
+    radial-gradient(circle at 70% 75%, rgba(var(--violet-rgb), 0.35), transparent 60%),
+    var(--bg-elev);
+  border: 1px solid rgba(var(--accent-rgb), 0.45);
+  box-shadow:
+    0 0 0 10px rgba(var(--accent-rgb), 0.05),
+    0 0 60px rgba(var(--accent-rgb), 0.3);
+  transform: translateZ(0);
+  animation: orbit-pulse 4s ease-in-out infinite;
+  animation-play-state: var(--play);
+}
+
+.orbit__core-glyph {
+  font-family: var(--font-mono);
+  font-size: 6.5cqi;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.orbit__core-label {
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: clamp(8px, 2.4cqi, 11px);
+  color: var(--text-muted);
+}
+
+@keyframes orbit-pulse {
+  0%, 100% { box-shadow: 0 0 0 10px rgba(var(--accent-rgb), 0.05), 0 0 50px rgba(var(--accent-rgb), 0.25); }
+  50% { box-shadow: 0 0 0 16px rgba(var(--accent-rgb), 0.03), 0 0 80px rgba(var(--accent-rgb), 0.35); }
+}
+
+/* ---------- Rings ---------- */
+.orbit__ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  transform: rotateZ(var(--gz)) rotateX(var(--tilt));
+}
+
+.orbit__spin {
+  position: absolute;
+  transform-style: preserve-3d;
+  animation: orbit-spin var(--dur) linear infinite;
+  animation-play-state: var(--play);
+}
+
+.orbit__path {
+  position: absolute;
+  width: calc(var(--r) * 2);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--fg-rgb), 0.13);
+  box-shadow: 0 0 24px rgba(var(--accent-rgb), 0.06) inset;
+}
+
+.orbit__slot {
+  position: absolute;
+  transform-style: preserve-3d;
+  transform: rotateZ(var(--a)) translateX(var(--r));
+}
+
+.orbit__face {
+  transform-style: preserve-3d;
+  animation: orbit-face var(--dur) linear infinite;
+  animation-play-state: var(--play);
+}
+
+@keyframes orbit-spin {
+  from { transform: rotateZ(0deg); }
+  to { transform: rotateZ(calc(360deg * var(--dir))); }
+}
+
+/* Exact inverse of the ring + slot rotation, so the badge always faces the viewer. */
+@keyframes orbit-face {
+  from {
+    transform: rotateZ(calc(var(--a) * -1)) rotateZ(0deg) rotateX(calc(var(--tilt) * -1)) rotateZ(calc(var(--gz) * -1));
+  }
+  to {
+    transform: rotateZ(calc(var(--a) * -1)) rotateZ(calc(-360deg * var(--dir))) rotateX(calc(var(--tilt) * -1)) rotateZ(calc(var(--gz) * -1));
+  }
+}
+
+/* Hovering a badge pauses its whole ring (spin + faces together, so they stay in sync). */
+.orbit__ring:has(.orbit__badge:hover) .orbit__spin,
+.orbit__ring:has(.orbit__badge:hover) .orbit__face {
+  animation-play-state: paused;
+}
+
+/* ---------- Badges ---------- */
+.orbit__badge {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: clamp(34px, 11.5cqi, 50px);
+  aspect-ratio: 1;
+  translate: -50% -50%;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-elev);
+  box-shadow: 0 10px 24px -12px rgba(var(--shadow-rgb), calc(0.8 * var(--shadow-alpha)));
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+}
+
+.orbit__badge svg {
+  width: 48%;
+  height: 48%;
+}
+
+.orbit__badge:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.15), 0 10px 24px -12px rgba(var(--shadow-rgb), 0.6);
+}
+
+.orbit__name {
+  position: absolute;
+  top: calc(100% + 6px);
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: var(--bg-elev-2);
+  border: 1px solid var(--line);
+  font-size: 0.625rem;
+  color: var(--text);
+  white-space: nowrap;
+  opacity: 0;
+  translate: 0 -4px;
+  transition: opacity var(--dur-fast), translate var(--dur-fast);
+  pointer-events: none;
+}
+
+.orbit__badge:hover .orbit__name {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* Scrolling gets every frame: hold the orbit still meanwhile (see SmoothScroll). */
+:root.is-scrolling .orbit * {
+  animation-play-state: paused !important;
+}
+
+/* The orbit needs more room than the old portrait card: let it spill a little past the column. */
+.hero__visual:has(.orbit) {
+  width: min(122%, 540px);
+}
+
+@media (max-width: 900px) {
+  .hero__visual:has(.orbit) {
+    width: min(100%, 460px);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero__visual:has(.orbit) {
+    width: 100%;
+    margin-block: 0.5rem 1rem;
+  }
+}

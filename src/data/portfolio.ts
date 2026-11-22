@@ -1,6 +1,7 @@
 /**
  * Single source of truth for all portfolio content.
- * Everything here is taken from the resume (public/resume/Vimal_Selvaraj_Resume.pdf).
+ * Content comes from the resume (public/resume/Vimal_Selvaraj_Resume.pdf) plus details Vimal
+ * supplied directly (scale figures, performance techniques, GitHub projects).
  * Edit this file to update the site — components only render what is defined here.
  */
 
@@ -14,12 +15,13 @@ export const profile = {
   experience: '5+',
   location: 'India',
   email: 'vimalselvam3@gmail.com',
-  phone: '+91 9600408017',
-  phoneHref: 'tel:+919600408017',
+  // The phone number lives only in the resume PDF — intentionally not shown on the site.
   linkedin: 'https://www.linkedin.com/in/vimal-selvaraj-5b0716251',
+  github: 'https://github.com/vimal-selvaraj',
+  githubHandle: 'vimal-selvaraj',
   resume: '/resume/Vimal_Selvaraj_Resume.pdf',
   resumeFileName: 'Vimal_Selvaraj_Resume.pdf',
-  /** Replace with an image path (e.g. '/profile.jpg') to show a real photo. */
+  /** Optional portrait image path; null shows the "VS" monogram in the hero. */
   photo: null as string | null,
 } as const
 
@@ -28,16 +30,18 @@ export const navItems = [
   { id: 'expertise', label: 'Expertise' },
   { id: 'experience', label: 'Experience' },
   { id: 'projects', label: 'Work' },
-  { id: 'achievements', label: 'Impact' },
+  { id: 'impact', label: 'Impact' },
   { id: 'contact', label: 'Contact' },
 ] as const
 
 export const hero = {
   label: 'Full-Stack Engineer | 5+ Years Experience',
-  headline: ['Engineering Scalable', 'Digital Experiences.'],
-  altHeadline: 'From Interfaces to Enterprise Systems.',
+  headline: ['I build enterprise', 'workflow platforms.'],
+  /** Word in the headline rendered in the accent serif. */
+  accentWord: 'workflow',
+  altHeadline: 'CRM · Ticketing · AI knowledge retrieval.',
   description:
-    'I build scalable enterprise applications by combining modern frontend engineering, robust backend architecture, and efficient data systems.',
+    'Full-stack developer with 5+ years across React, Node and PostgreSQL — building CRM, ticketing and AI knowledge platforms from interface to database.',
   floatingTech: ['React 18', 'TypeScript', 'NodeJS', 'ExpressJS', 'PostgreSQL', 'Redux Toolkit', 'Docker', 'Pinecone'],
   /** The layered architecture described in the resume: UI → API gateway → back-end APIs → database. */
   systemPath: [
@@ -47,6 +51,8 @@ export const hero = {
     { layer: 'Data', tech: 'PostgreSQL' },
   ],
   meta: { current: 'Vega Intellisoft', client: 'Saint-Gobain' },
+  /** Hero visual: 'orbit' = orbiting tech stack, 'code' = live code editor, 'developer' = illustrated developer. */
+  visual: 'orbit' as 'orbit' | 'code' | 'developer',
 }
 
 export type HighlightIcon = 'years' | 'fullstack' | 'architecture' | 'workflow' | 'database' | 'ai'
@@ -57,7 +63,7 @@ export const about = {
     'With 5+ years of experience in software development, I specialize in building scalable enterprise applications and workflow-driven platforms.',
   paragraphs: [
     'My experience spans frontend architecture, backend API development, database optimization, authentication systems, and multi-tenant application design.',
-    'I have worked on enterprise CRM platforms, ticketing systems, configurable service catalogs, analytics dashboards, and AI-powered knowledge management solutions.',
+    'I have worked on enterprise CRM platforms, ticketing systems, configurable service catalogs, analytics dashboards, and AI-powered knowledge management solutions — most recently as the main developer of the Service Catalog and Ticketing modules on a platform serving ~50 tenants.',
     'I enjoy solving complex engineering challenges and transforming business requirements into maintainable, high-performance applications.',
   ],
   highlights: [
@@ -79,9 +85,8 @@ export const skillGroups: SkillGroup[] = [
     title: 'Frontend',
     caption: 'Interfaces that scale with the product',
     items: [
-      'ReactJS', 'React 18', 'Redux', 'Redux Toolkit', 'TypeScript', 'JavaScript ES6+', 'HTML5', 'CSS3', 'SCSS',
-      'Bootstrap', 'MUI', 'React Hooks', 'Custom Hooks', 'React Router', 'Axios', 'Responsive UI', 'Lazy Loading',
-      'Code Splitting', 'Debouncing',
+      'React 18', 'TypeScript', 'JavaScript (ES6+)', 'Redux Toolkit', 'React Hooks & Custom Hooks', 'React Router',
+      'MUI', 'SCSS', 'HTML5 & CSS3', 'Responsive UI', 'Lazy Loading & Code Splitting', 'Form Handling',
     ],
   },
   {
@@ -89,8 +94,8 @@ export const skillGroups: SkillGroup[] = [
     title: 'Backend',
     caption: 'APIs, gateways and secure access',
     items: [
-      'NodeJS', 'ExpressJS', 'TypeScript', 'REST API Development', 'API Integration', 'API Gateway', 'SSO', 'JWT',
-      'Authentication', 'Authorization', 'Middleware Development',
+      'NodeJS', 'ExpressJS', 'TypeScript', 'REST API Design', 'API Gateway', 'SSO (Okta)', 'JWT',
+      'Authentication & Authorization', 'Middleware Development',
     ],
   },
   {
@@ -136,9 +141,9 @@ export const experience: Job[] = [
     period: 'May 2026 – Present',
     client: 'Saint-Gobain',
     summary:
-      'Develop and maintain cconnect, an enterprise CRM portal serving multiple Saint-Gobain business units.',
+      'Develop and maintain cconnect, Saint-Gobain’s enterprise CRM portal for ~150,000 users across six business units — Glass, CCBU/Fosroc, GNO, Entrance Solutions, DNA Leads and SG Visibility.',
     contributions: [
-      'Develop enterprise CRM features across multiple business units.',
+      'Develop enterprise CRM features across six business units.',
       'Build full-stack features using React 18, TypeScript, and Redux Toolkit.',
       'Develop backend functionality using NodeJS and ExpressJS.',
       'Implement business logic with PostgreSQL stored functions and Sequelize ORM.',
@@ -154,15 +159,16 @@ export const experience: Job[] = [
     companyNote: 'Actionable Science Labs Pvt Ltd',
     role: 'Full-Stack Developer',
     period: 'Feb 2023 – May 2026',
-    summary: 'Developed enterprise workflow applications and multiple product modules.',
+    summary:
+      'Main developer of the Service Catalog and Ticketing modules on a multi-tenant workflow platform serving ~50 tenants, in a ~30-person team.',
     contributions: [
-      'Built configurable Service Catalog systems.',
-      'Developed ticketing management modules.',
-      'Implemented RBAC and secure multi-tenant access.',
-      'Integrated Azure Service Bus for event-driven workflow updates.',
-      'Optimized PostgreSQL queries and API performance — ~30% faster response times.',
-      'Developed reusable React components used across multiple modules.',
-      'Built the Knowledge Management Platform.',
+      'Main developer of the configurable Service Catalog — the blueprint for the ticketing system.',
+      'Main developer of the Ticketing Management module and its configurable workflows.',
+      'Implemented RBAC and secure multi-tenant access across ~50 tenants.',
+      'Integrated Azure Service Bus for event-driven, real-time workflow updates.',
+      'Improved response times by ~30%: indexes, rewritten slow queries, stored functions, caching, pagination and lazy-loaded ticket pages.',
+      'Built reusable React components used across Ticketing, Service Catalog, Data Warehouse and Knowledge Management.',
+      'Delivered the Knowledge Management Platform in under a month (Outstanding New Joinee Award).',
       'Integrated Pinecone vector database for AI-based knowledge retrieval.',
     ],
     stack: ['ReactJS', 'NodeJS', 'ExpressJS', 'PostgreSQL', 'Azure Service Bus', 'Pinecone'],
@@ -204,7 +210,7 @@ export const featuredProjects: FeaturedProject[] = [
     title: 'cconnect',
     subtitle: 'Saint-Gobain CRM Platform',
     category: 'Enterprise CRM',
-    overview: 'Enterprise CRM platform serving multiple Saint-Gobain business units.',
+    overview: 'Enterprise CRM for ~150,000 users across six Saint-Gobain business units.',
     contributions: [
       'React 18 and TypeScript interfaces.',
       'Redux Toolkit state management.',
@@ -221,7 +227,7 @@ export const featuredProjects: FeaturedProject[] = [
     id: 'service-catalog',
     title: 'Service Catalog',
     category: 'Workflow Platform',
-    overview: 'Configurable Service Catalog platform acting as the blueprint for ticketing workflows.',
+    overview: 'Configurable Service Catalog — the blueprint for ticketing workflows. I was the main developer.',
     contributions: [
       'Configurable service templates.',
       'Dynamic form fields.',
@@ -238,7 +244,7 @@ export const featuredProjects: FeaturedProject[] = [
     id: 'ticketing',
     title: 'Ticketing Management System',
     category: 'Enterprise Workflow',
-    overview: 'Enterprise ticket management platform supporting configurable ticket workflows.',
+    overview: 'Ticket management with configurable workflows, used across ~50 tenants. I was the main developer.',
     contributions: [
       'Dynamic ticket form rendering.',
       'Configurable templates.',
@@ -271,7 +277,7 @@ export const featuredProjects: FeaturedProject[] = [
     id: 'knowledge',
     title: 'Knowledge Management Platform',
     category: 'AI Knowledge Systems',
-    overview: 'Knowledge ingestion and retrieval platform for AI-powered chatbot experiences.',
+    overview: 'Knowledge ingestion and retrieval for AI-powered chatbots — delivered in under a month.',
     contributions: [
       'Document ingestion.',
       'Article ingestion.',
@@ -286,9 +292,10 @@ export const featuredProjects: FeaturedProject[] = [
   },
 ]
 
-export type SecondaryProject = { title: string; category: string; points: string[]; stack: string[] }
+/** Client projects delivered at Colan Infotech (2021–2022). */
+export type ColanProject = { title: string; category: string; points: string[]; stack: string[] }
 
-export const secondaryProjects: SecondaryProject[] = [
+export const colanProjects: ColanProject[] = [
   {
     title: 'Contractable',
     category: 'Project Tracking Platform',
@@ -327,30 +334,135 @@ export const secondaryProjects: SecondaryProject[] = [
   },
 ]
 
-export type Achievement = {
-  value: number
-  prefix?: string
-  suffix: string
-  label: string
-  detail: string
+export type SideProject = {
+  name: string
+  title: string
+  kind: string
+  description: string
+  stack: string[]
+  url: string
+  featured?: boolean
 }
 
-export const achievements: Achievement[] = [
-  { value: 5, suffix: '+', label: 'Years of experience', detail: 'Building enterprise web applications end to end.' },
-  { value: 30, prefix: '~', suffix: '%', label: 'Faster API & DB response', detail: 'PostgreSQL query and API performance optimization.' },
-  { value: 40, prefix: '~', suffix: '%', label: 'Faster ticket page loads', detail: 'Ticket system performance improvements.' },
-  { value: 5, suffix: '+', label: 'Modules on shared components', detail: 'Reusable React components adopted across modules.' },
+/** Personal projects on GitHub (descriptions taken from each repository). */
+export const sideProjects: SideProject[] = [
+  {
+    name: 'Askme',
+    title: 'Askme — Open Studio AI',
+    kind: 'AI workspace',
+    description:
+      'A local-first multimodal AI workspace: React chat UI, FastAPI backend, local models through Ollama behind a provider abstraction, a dynamic skills registry, and optional ComfyUI image/video workflows.',
+    stack: ['React', 'Vite', 'Python', 'FastAPI', 'Ollama'],
+    url: 'https://github.com/vimal-selvaraj/Askme',
+    featured: true,
+  },
+  {
+    name: 'netflix-clone',
+    title: 'Netflix homepage clone',
+    kind: 'Frontend',
+    description:
+      'Streaming-style homepage with a hero, trending rows, movie cards, previews and search, built on TanStack Start.',
+    stack: ['TypeScript', 'React', 'TanStack Router', 'Tailwind CSS', 'Zustand'],
+    url: 'https://github.com/vimal-selvaraj/netflix-clone',
+  },
+  {
+    name: 'age-of-war-ui',
+    title: 'Age of War UI',
+    kind: 'Game UI',
+    description:
+      'Interface for a battlefield strategy game — battalion and platoon views built from reusable cards and custom inputs.',
+    stack: ['React', 'JavaScript', 'CSS'],
+    url: 'https://github.com/vimal-selvaraj/age-of-war-ui',
+  },
+]
+
+/** Each impact story renders its own animated illustration. */
+export type ImpactVisual = 'latency' | 'components' | 'catalog' | 'events'
+
+/**
+ * Impact stories — what I did and what it changed. Wording stays close to the resume;
+ * figures are the resume's approximations, not invented benchmarks.
+ */
+export type ImpactStory = {
+  id: string
+  /** Animated count (e.g. 30 → "~30%"); omit for a word-based highlight. */
+  count?: { value: number; prefix?: string; suffix: string }
+  /** Shown instead of a count, e.g. "Real-time". */
+  highlight?: string
+  metricLabel: string
+  headline: string
+  context: string
+  did: string[]
+  outcome: string
+  visual: ImpactVisual
+}
+
+export const impactStories: ImpactStory[] = [
+  {
+    id: 'performance',
+    count: { value: 30, prefix: '~', suffix: '%' },
+    metricLabel: 'faster response times',
+    headline: 'Made the workflow platform faster',
+    context: 'Rezolve.ai · ticketing & workflow platform',
+    did: [
+      'Added indexes and rewrote the slowest PostgreSQL queries.',
+      'Moved heavy business logic into stored functions.',
+      'Added caching and pagination to the APIs.',
+      'Lazy-loaded ticket pages so they render faster.',
+    ],
+    outcome: 'Response times improved by approximately 30%.',
+    visual: 'latency',
+  },
+  {
+    id: 'components',
+    count: { value: 5, suffix: '+' },
+    metricLabel: 'modules on shared components',
+    headline: 'Built a shared component foundation',
+    context: 'Rezolve.ai · product modules',
+    did: [
+      'Designed reusable React components shared across the product.',
+      'Adopted in Ticket Management, Service Catalog, Data Warehouse and Knowledge Management.',
+    ],
+    outcome: 'Used across 5+ modules — faster development and a consistent UI.',
+    visual: 'components',
+  },
+  {
+    id: 'catalog',
+    highlight: 'Configurable',
+    metricLabel: 'workflows, templates & fields',
+    headline: 'Put workflow setup in admins’ hands',
+    context: 'Rezolve.ai · Service Catalog',
+    did: [
+      'As main developer, built the configurable Service Catalog — the blueprint for the ticketing system.',
+      'Designed the PostgreSQL schema for reusable ticket templates and dynamic fields.',
+    ],
+    outcome: 'Administrators configure workflows, templates and dynamic fields used across the ticketing platform.',
+    visual: 'catalog',
+  },
+  {
+    id: 'events',
+    highlight: 'Real-time',
+    metricLabel: 'ticket workflow updates',
+    headline: 'Made ticket updates event-driven',
+    context: 'Rezolve.ai · ticketing system',
+    did: [
+      'Integrated Azure Service Bus into the ticketing workflow.',
+      'Implemented asynchronous workflow updates across ticket status transitions.',
+    ],
+    outcome: 'Real-time ticket workflow updates through an event-driven architecture, on a platform serving ~50 tenants.',
+    visual: 'events',
+  },
 ]
 
 export const award = {
   title: 'Outstanding New Joinee Award',
   org: 'Rezolve.ai',
-  detail: 'Recognized for delivering the Knowledge Management application within a short timeframe.',
+  detail: 'Recognized for delivering the Knowledge Management application in under a month.',
 }
 
 export const education = {
   degree: 'Bachelor of Engineering (B.E.)',
-  institution: 'Anna University',
+  institution: 'AVC College of Engineering (Anna University)',
   year: '2019',
 }
 
@@ -360,7 +472,6 @@ export const learning = {
   topics: [
     { title: 'Generative AI', note: 'Model capabilities and practical application patterns.' },
     { title: 'Retrieval-Augmented Generation', note: 'Grounding answers in trusted knowledge sources.' },
-    { title: 'Agentic AI', note: 'Tool-using systems that plan and act.' },
     { title: 'Hugging Face Models', note: 'Open models, embeddings and pipelines.' },
     { title: 'AI Application Development', note: 'Shipping AI features as reliable products.' },
     { title: 'AI-powered Knowledge Systems', note: 'Search and retrieval over organizational knowledge.' },

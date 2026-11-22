@@ -85,7 +85,7 @@
   line-height: 1;
   letter-spacing: -0.05em;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.18);
+  -webkit-text-stroke: 1px rgba(var(--fg-rgb), 0.18);
   transition: -webkit-text-stroke-color var(--dur);
 }
 
@@ -99,14 +99,14 @@
   padding: clamp(1.5rem, 1rem + 2vw, 2.5rem);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.015);
+  background: rgba(var(--fg-rgb), 0.015);
   transition: border-color var(--dur), background var(--dur);
 }
 
 .xp__item:hover .xp__card,
 .xp__item.is-open .xp__card {
   border-color: var(--line-strong);
-  background: rgba(255, 255, 255, 0.025);
+  background: rgba(var(--fg-rgb), 0.025);
 }
 
 .xp__company {

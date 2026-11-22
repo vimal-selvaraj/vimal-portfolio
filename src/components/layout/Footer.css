@@ -85,3 +85,24 @@
 .footer__top-link:hover {
   color: var(--accent);
 }
+
+.footer__social {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.footer__social a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--text-muted);
+  transition: color var(--dur-fast), border-color var(--dur-fast);
+}
+
+.footer__social a:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}

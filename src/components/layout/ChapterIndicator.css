@@ -1,0 +1,51 @@
+/* Lives in the left margin, so it only appears when there is margin to spare. */
+.chapter {
+  display: none;
+}
+
+@media (min-width: 1440px) and (min-height: 640px) {
+  .chapter {
+    position: fixed;
+    left: max(1.25rem, calc((100vw - var(--container)) / 2 - 3.5rem));
+    top: 50%;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+    translate: 0 -50%;
+    pointer-events: none;
+  }
+}
+
+.chapter__track {
+  position: relative;
+  width: 1px;
+  height: 120px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.chapter__fill {
+  position: absolute;
+  inset: 0;
+  transform-origin: top;
+  background: linear-gradient(180deg, var(--accent), var(--violet));
+}
+
+.chapter__text {
+  display: grid;
+  writing-mode: vertical-rl;
+  rotate: 180deg;
+  font-size: 0.625rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+.chapter__label {
+  display: block;
+}
+
+.chapter__num {
+  color: var(--accent);
+}

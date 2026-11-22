@@ -1,13 +1,15 @@
 import type { CSSProperties, PointerEvent } from 'react'
 import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react'
 import { hero, profile } from '../../data/portfolio'
+import { DeveloperIllustration } from './DeveloperIllustration'
+import { CodeEditorVisual } from './CodeEditorVisual'
 
 /** Inline style that may also set CSS custom properties. */
 type StyleVars = CSSProperties & Record<`--${string}`, string | number>
 
 /** Positions for the floating tech labels, as % of the visual's box. */
 const chipSpots: CSSProperties[] = [
-  { top: '6%', left: '-10%' },
+  { top: '58%', left: '-18%' }, // below the request.path panel (top-left), clear of the plant
   { top: '18%', right: '-12%' },
   { top: '42%', left: '-16%' },
   { top: '56%', right: '-14%' },
@@ -22,6 +24,7 @@ const chipSpots: CSSProperties[] = [
  * a subtle 3D tilt on mouse move, floating tech labels and a layered-architecture panel.
  */
 export function Portrait() {
+  const isCode = hero.visual === 'code'
   const reduce = useReducedMotion()
   const px = useMotionValue(0)
   const py = useMotionValue(0)
@@ -44,7 +47,7 @@ export function Portrait() {
   }
 
   return (
-    <div className="portrait" onPointerMove={handleMove} onPointerLeave={reset}>
+    <div className={`portrait portrait--${isCode ? 'code' : 'art'}`} onPointerMove={handleMove} onPointerLeave={reset}>
       <motion.figure className="portrait__frame" style={{ rotateX, rotateY }}>
         <motion.div
           className="portrait__glow"
@@ -52,11 +55,11 @@ export function Portrait() {
           style={{ left: glowX, top: glowY }}
         />
         {profile.photo ? (
-          <img className="portrait__photo" src={profile.photo} alt={`Portrait of ${profile.name}`} loading="eager" />
+          <img className="portrait__photo" src={profile.photo} alt={`Portrait of ${profile.name}`} loading="eager" decoding="async" />
+        ) : isCode ? (
+          <CodeEditorVisual />
         ) : (
-          <div className="portrait__placeholder" role="img" aria-label={`${profile.name} monogram`}>
-            <span className="portrait__monogram serif">{profile.initials}</span>
-          </div>
+          <DeveloperIllustration />
         )}
 
         {/* Technical frame details */}
@@ -65,12 +68,16 @@ export function Portrait() {
         <span className="portrait__corner portrait__corner--bl" aria-hidden="true" />
         <span className="portrait__corner portrait__corner--br" aria-hidden="true" />
 
-        <figcaption className="portrait__caption">
-          <span className="mono portrait__caption-label">{profile.title}</span>
-          <span className="portrait__caption-name">{profile.name}</span>
-        </figcaption>
+        {!isCode && (
+          <figcaption className="portrait__caption">
+            <span className="mono portrait__caption-label">{profile.title}</span>
+            <span className="portrait__caption-name">{profile.name}</span>
+          </figcaption>
+        )}
       </motion.figure>
 
+      {/* The code editor's terminal already traces the request path, so the panel is only for the illustration. */}
+      {!isCode && (
       <div className="portrait__stack" aria-label="Layered architecture I work across">
         <p className="mono portrait__stack-title">
           <span className="portrait__stack-dot" aria-hidden="true" /> request.path
@@ -84,6 +91,7 @@ export function Portrait() {
           ))}
         </ol>
       </div>
+      )}
 
       <ul role="list" className="portrait__chips" aria-label="Core technologies">
         {hero.floatingTech.map((tech, i) => (

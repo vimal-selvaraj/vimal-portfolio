@@ -1,33 +1,32 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import type { ComponentType } from 'react'
-import { ArrowUpRight, Check, Copy, Download, Mail, Phone } from 'lucide-react'
+import { ArrowUpRight, Check, Copy, Download, Mail } from 'lucide-react'
 import { contact, profile } from '../../data/portfolio'
 import { Reveal } from '../../components/ui/Reveal'
 import { MagneticLink } from '../../components/ui/MagneticLink'
+import { Tilt } from '../../components/ui/Tilt'
+import { GitHubIcon, LinkedInIcon, type IconProps } from '../../components/ui/BrandIcons'
 import './Contact.css'
 
 const EASE = [0.22, 1, 0.36, 1] as const
 
-type IconProps = { size?: number; strokeWidth?: number }
-
-/** Lucide dropped brand marks, so the LinkedIn glyph is drawn inline in the same outline style. */
-function LinkedInIcon({ size = 20, strokeWidth = 1.6 }: IconProps) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
-      <rect x="2.5" y="2.5" width="19" height="19" rx="4" />
-      <path d="M7.5 10.5v6M7.5 7.5v.01M11.5 16.5v-6M11.5 13a2.5 2.5 0 0 1 5 0v3.5" />
-    </svg>
-  )
+type Channel = {
+  label: string
+  value: string
+  href: string
+  icon: ComponentType<IconProps>
+  cursor: string
+  external?: boolean
+  download?: string
 }
 
-type Channel = { label: string; value: string; href: string; icon: ComponentType<IconProps>; external?: boolean; download?: string }
-
+// Phone is intentionally not listed — it appears only in the resume PDF.
 const channels: Channel[] = [
-  { label: 'Email', value: profile.email, href: `mailto:${profile.email}`, icon: Mail },
-  { label: 'Phone', value: profile.phone, href: profile.phoneHref, icon: Phone },
-  { label: 'LinkedIn', value: 'vimal-selvaraj', href: profile.linkedin, icon: LinkedInIcon, external: true },
-  { label: 'Resume', value: 'Download PDF', href: profile.resume, icon: Download, download: profile.resumeFileName },
+  { label: 'Email', value: profile.email, href: `mailto:${profile.email}`, icon: Mail, cursor: 'Write' },
+  { label: 'LinkedIn', value: 'vimal-selvaraj', href: profile.linkedin, icon: LinkedInIcon, cursor: 'Open', external: true },
+  { label: 'GitHub', value: profile.githubHandle, href: profile.github, icon: GitHubIcon, cursor: 'Code', external: true },
+  { label: 'Resume', value: 'Download PDF', href: profile.resume, icon: Download, cursor: 'PDF', download: profile.resumeFileName },
 ]
 
 /** Copies the email address and confirms it to sighted and screen-reader users alike. */
@@ -72,7 +71,7 @@ export function Contact() {
           <span>Contact</span>
           <span className="contact__avail">
             <span className="contact__dot" aria-hidden="true" />
-            Open to new opportunities
+            Open to conversations
           </span>
         </Reveal>
 
@@ -115,8 +114,10 @@ export function Contact() {
             const Icon = c.icon
             return (
               <Reveal key={c.label} as="li" delay={0.05 * i}>
+                <Tilt className="channel-tilt" max={8}>
                 <a
                   className="channel"
+                  data-cursor={c.cursor}
                   href={c.href}
                   download={c.download}
                   target={c.external ? '_blank' : undefined}
@@ -132,6 +133,7 @@ export function Contact() {
                   <ArrowUpRight className="channel__arrow" size={18} aria-hidden="true" />
                   {c.external && <span className="sr-only">(opens in a new tab)</span>}
                 </a>
+                </Tilt>
               </Reveal>
             )
           })}

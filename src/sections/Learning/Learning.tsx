@@ -1,8 +1,10 @@
-import { GraduationCap } from 'lucide-react'
-import { education, learning } from '../../data/portfolio'
+import { ArrowUpRight, GraduationCap } from 'lucide-react'
+import { education, learning, sideProjects } from '../../data/portfolio'
 import { SectionHeading } from '../../components/ui/SectionHeading'
 import { Reveal } from '../../components/ui/Reveal'
 import './Learning.css'
+
+const practice = sideProjects.find((p) => p.featured)
 
 export function Learning() {
   return (
@@ -34,6 +36,7 @@ export function Learning() {
             ))}
           </ol>
 
+          <div className="learn__side">
           <Reveal className="edu" delay={0.1}>
             <span className="edu__icon" aria-hidden="true">
               <GraduationCap size={26} strokeWidth={1.5} />
@@ -46,6 +49,21 @@ export function Learning() {
               <span className="edu__year-num">{education.year}</span>
             </p>
           </Reveal>
+
+          {/* Evidence for the topics above: a real project, not just a reading list. */}
+          {practice && (
+            <Reveal delay={0.15}>
+              <a className="practice" href={practice.url} target="_blank" rel="noopener noreferrer" data-cursor="Repo">
+                <span className="practice__label mono">In practice</span>
+                <span className="practice__title">
+                  {practice.title} <ArrowUpRight size={16} aria-hidden="true" />
+                </span>
+                <span className="practice__desc">Local models, a provider abstraction and a skills registry — the ideas above, built.</span>
+                <span className="sr-only">(GitHub repository, opens in a new tab)</span>
+              </a>
+            </Reveal>
+          )}
+          </div>
         </div>
       </div>
     </section>

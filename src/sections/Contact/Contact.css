@@ -11,7 +11,6 @@
   translate: -50% 0;
   border-radius: 50%;
   background: radial-gradient(closest-side, rgba(var(--accent-rgb), 0.14), rgba(var(--violet-rgb), 0.08) 55%, transparent);
-  filter: blur(30px);
   pointer-events: none;
 }
 
@@ -54,7 +53,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #4ade80;
+  background: var(--success);
 }
 
 .contact__dot::after {
@@ -62,7 +61,7 @@
   position: absolute;
   inset: -4px;
   border-radius: 50%;
-  border: 1px solid #4ade80;
+  border: 1px solid var(--success);
   animation: hero-pulse 2.4s var(--ease-out) infinite;
 }
 
@@ -150,8 +149,7 @@
   padding: 1.25rem;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: var(--glass);
-  backdrop-filter: blur(10px);
+  background: var(--bg-elev);
   transition: border-color var(--dur), background var(--dur), transform var(--dur) var(--ease-out);
 }
 
@@ -215,4 +213,9 @@
   .contact__avail {
     margin-left: 0;
   }
+}
+
+.channel-tilt {
+  height: 100%;
+  border-radius: var(--radius);
 }

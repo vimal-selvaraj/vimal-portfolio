@@ -50,7 +50,7 @@
 /* Primary: solid light pill, fills with accent */
 .btn--primary {
   background: var(--text);
-  color: #07080a;
+  color: var(--bg);
 }
 
 .btn--primary .btn__fill {
@@ -61,7 +61,7 @@
 .btn--secondary {
   border: 1px solid var(--line-strong);
   color: var(--text);
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(var(--fg-rgb), 0.02);
 }
 
 .btn--secondary .btn__fill {
@@ -70,7 +70,7 @@
 
 .btn--secondary:hover,
 .btn--secondary:focus-visible {
-  color: #07080a;
+  color: var(--bg);
   border-color: var(--text);
 }
 

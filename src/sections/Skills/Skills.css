@@ -9,7 +9,7 @@
   grid-template-columns: minmax(260px, 0.8fr) minmax(0, 1.6fr);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.012);
+  background: rgba(var(--fg-rgb), 0.012);
   overflow: hidden;
 }
 
@@ -48,7 +48,7 @@
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.1), rgba(255, 255, 255, 0.03));
+  background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.1), rgba(var(--fg-rgb), 0.03));
   box-shadow: inset 2px 0 0 var(--accent);
 }
 
@@ -121,7 +121,7 @@
   border-radius: 999px;
   font-size: var(--fs-sm);
   color: var(--text);
-  background: rgba(255, 255, 255, 0.025);
+  background: rgba(var(--fg-rgb), 0.025);
   transition: border-color var(--dur-fast), background var(--dur-fast), color var(--dur-fast),
     transform 300ms var(--ease-out);
   cursor: default;
@@ -175,12 +175,12 @@
   letter-spacing: -0.03em;
   white-space: nowrap;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.22);
+  -webkit-text-stroke: 1px rgba(var(--fg-rgb), 0.22);
   transition: color 300ms;
 }
 
 .skills__marquee-row.is-reverse .skills__marquee-item {
-  color: rgba(255, 255, 255, 0.08);
+  color: rgba(var(--fg-rgb), 0.08);
   -webkit-text-stroke: 0;
 }
 

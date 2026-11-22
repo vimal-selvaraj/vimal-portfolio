@@ -1,0 +1,170 @@
+/* Code editor hero visual — syntax colours follow the theme. */
+.ce {
+  --ce-kw: var(--violet);
+  --ce-fn: var(--accent);
+  --ce-str: #86d9a0;
+  --ce-num: #f5a97f;
+  --ce-tag: #f28fad;
+  --ce-attr: #f5c97a;
+  --ce-ok: var(--success);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  font-family: var(--font-mono);
+  /* Scales with the card (the frame is a size container), so 40-column lines always fit. */
+  font-size: clamp(7px, 3.05cqi, 12.5px);
+  line-height: 1.75;
+  color: var(--text-muted);
+  background: var(--surface-sunken);
+}
+
+:root[data-theme='light'] .ce {
+  --ce-str: #15803d;
+  --ce-num: #c2410c;
+  --ce-tag: #be185d;
+  --ce-attr: #a16207;
+}
+
+/* Tabs */
+.ce-tabs {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0 0.75rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-elev-2);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ce-dots {
+  display: flex;
+  gap: 5px;
+  margin-right: 0.6rem;
+}
+
+.ce-dots i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--line-strong);
+}
+
+.ce-tab {
+  padding: 0.55rem 0.7rem;
+  border-bottom: 2px solid transparent;
+  color: var(--text-dim);
+  font-size: 0.92em;
+  transition: color 300ms, border-color 300ms;
+}
+
+.ce-tab.is-active {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+/* Code */
+.ce-code {
+  padding: 0.9rem 0.75rem 0.6rem 0;
+  overflow: hidden;
+}
+
+.ce-line {
+  display: grid;
+  grid-template-columns: 2.6em 1fr;
+  white-space: pre;
+}
+
+.ce-gutter {
+  padding-right: 0.9em;
+  text-align: right;
+  color: rgba(var(--fg-rgb), 0.22);
+  user-select: none;
+}
+
+.ce-kw { color: var(--ce-kw); }
+.ce-fn { color: var(--ce-fn); }
+.ce-str { color: var(--ce-str); }
+.ce-num { color: var(--ce-num); }
+.ce-tag { color: var(--ce-tag); }
+.ce-attr { color: var(--ce-attr); }
+.ce-v,
+.ce-t { color: var(--text); }
+.ce-p { color: var(--text-muted); }
+.ce-dim { color: var(--text-dim); }
+.ce-ok { color: var(--ce-ok); }
+
+.ce-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.15em;
+  margin-left: 1px;
+  vertical-align: text-bottom;
+  background: var(--accent);
+  animation: ce-blink 1s steps(1) infinite;
+}
+
+.ce-caret--term {
+  margin-left: 0.15em;
+}
+
+@keyframes ce-blink {
+  50% { opacity: 0; }
+}
+
+/* Terminal */
+.ce-term {
+  min-height: 9.2em;
+  padding: 0.55rem 0.9rem 0.7rem;
+  border-top: 1px solid var(--line);
+  background: rgba(var(--fg-rgb), 0.025);
+}
+
+.ce-term-title {
+  margin-bottom: 0.25rem;
+  font-size: 0.8em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.ce-term-line {
+  white-space: pre;
+  color: var(--text);
+}
+
+.ce-prompt {
+  color: var(--accent);
+}
+
+.ce-term-out {
+  animation: ce-in 300ms var(--ease-out);
+}
+
+@keyframes ce-in {
+  from { opacity: 0; transform: translateY(4px); }
+}
+
+/* Status bar */
+.ce-status {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.3rem 0.9rem;
+  border-top: 1px solid var(--line);
+  background: var(--bg-elev-2);
+  font-size: 0.82em;
+  color: var(--text-dim);
+}
+
+.ce-status span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.ce-status-ok {
+  margin-left: auto;
+  color: var(--ce-ok);
+}

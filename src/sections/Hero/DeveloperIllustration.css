@@ -1,0 +1,226 @@
+/* Developer illustration — colours that follow the theme are tokens; the character's own colours are fixed. */
+.dev {
+  --play: paused;
+  --dev-skin: #c98b5f;
+  --dev-skin-shade: #a8704a;
+  --dev-hair: #1b1613;
+  --dev-shirt: #24366b;
+  --dev-shirt-shade: #1a2850;
+  --dev-collar: #31478a;
+  --dev-frame: #0d1015;
+  --dev-laptop: #252a35;
+  --dev-laptop-base: #313744;
+  --dev-desk: var(--bg-elev-2);
+  position: absolute;
+  inset: 0;
+  /* Own layer: redraws of the animated SVG don't repaint the tilting card around it. */
+  will-change: transform;
+  contain: paint;
+}
+
+:root[data-theme='light'] .dev {
+  --dev-laptop: #d3d8e1;
+  --dev-laptop-base: #bfc6d2;
+}
+
+.dev.is-live {
+  --play: running;
+}
+
+.dev svg {
+  width: 100%;
+  height: 100%;
+}
+
+.dev * {
+  animation-play-state: var(--play) !important;
+}
+
+/* Hold still while the page is scrolling, so scrolling gets every frame. */
+:root.is-scrolling .dev * {
+  animation-play-state: paused !important;
+}
+
+/* ---------- Fills ---------- */
+.dev-skin { fill: var(--dev-skin); }
+.dev-skin-shade { fill: var(--dev-skin-shade); }
+.dev-hair { fill: var(--dev-hair); }
+.dev-shirt { fill: var(--dev-shirt); }
+.dev-shirt-shade { fill: var(--dev-shirt-shade); }
+.dev-collar { fill: var(--dev-collar); }
+.dev-arm { fill: var(--dev-shirt-shade); }
+.dev-eye { fill: var(--dev-hair); }
+.dev-desk { fill: var(--dev-desk); }
+.dev-desk-edge { fill: rgba(var(--fg-rgb), 0.12); }
+.dev-lid { fill: var(--dev-laptop); }
+.dev-lid-shine { fill: rgba(255, 255, 255, 0.08); }
+.dev-base { fill: var(--dev-laptop-base); }
+.dev-pot { fill: #b9653e; }
+.dev-leaves ellipse { fill: #3f9b6b; }
+.dev-mug { fill: var(--violet); }
+.dev-mug-band { fill: rgba(255, 255, 255, 0.25); }
+.dev-logo-glow { fill: url(#dev-logo-glow); }
+
+.dev-mouth,
+.dev-brow,
+.dev-nose,
+.dev-mug-handle,
+.dev-steam,
+.dev-frame {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.dev-mouth { stroke: #7d4334; stroke-width: 2.5; }
+.dev-hair-shine { fill: none; stroke: rgba(255, 255, 255, 0.16); stroke-width: 2.5; stroke-linecap: round; }
+.dev-brow { stroke: var(--dev-hair); stroke-width: 5; }
+.dev-nose { stroke: var(--dev-skin-shade); stroke-width: 2.2; }
+.dev-frame { stroke: var(--dev-frame); stroke-width: 3; }
+.dev-mug-handle { stroke: var(--violet); stroke-width: 5; }
+
+.dev-lens { fill: rgba(var(--accent-rgb), 0.14); }
+.dev-code-line { fill: var(--accent); opacity: 0.55; }
+
+.dev-logo {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 600;
+  text-anchor: middle;
+  fill: var(--accent);
+  animation: dev-logo 3.2s ease-in-out infinite;
+}
+
+.dev-token {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  fill: var(--accent);
+  opacity: 0;
+  animation: dev-token 5s ease-out infinite;
+}
+
+.dev-token:nth-child(even) { fill: var(--violet); }
+
+.dev-steam {
+  stroke: rgba(var(--fg-rgb), 0.35);
+  stroke-width: 2.4;
+  stroke-dasharray: 40;
+  animation: dev-steam 2.8s ease-in-out infinite;
+}
+
+.dev-steam--2 { animation-delay: 0.9s; }
+.dev-steam--3 { animation-delay: 1.8s; }
+
+/* ---------- Motion ---------- */
+
+/* Transforms on SVG parts use their own box as the origin. */
+.dev-head,
+.dev-eyes,
+.dev-hand,
+.dev-leaves,
+.dev-reflection,
+.dev-body {
+  transform-box: fill-box;
+}
+
+.dev-body {
+  transform-origin: 50% 100%;
+  animation: dev-breathe 4s ease-in-out infinite;
+}
+
+.dev-head {
+  transform-origin: 50% 90%;
+  animation: dev-nod 7s ease-in-out infinite;
+}
+
+.dev-eyes {
+  transform-origin: center;
+  animation: dev-blink 5.5s infinite;
+}
+
+.dev-reflection {
+  animation: dev-scroll 3.5s linear infinite;
+}
+
+.dev-face-glow {
+  animation: dev-glow 3.2s ease-in-out infinite;
+}
+
+.dev-hand {
+  transform-origin: center;
+  animation: dev-type 0.42s ease-in-out infinite;
+}
+
+.dev-hand--r {
+  animation-delay: 0.21s;
+}
+
+.dev-leaves {
+  transform-origin: 50% 100%;
+  animation: dev-sway 6s ease-in-out infinite;
+}
+
+@keyframes dev-breathe {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.5px); }
+}
+
+@keyframes dev-nod {
+  0%, 100% { transform: rotate(0deg); }
+  30% { transform: rotate(-1.6deg); }
+  60% { transform: rotate(1.2deg); }
+}
+
+@keyframes dev-blink {
+  0%, 94%, 100% { transform: scaleY(1); }
+  96% { transform: scaleY(0.1); }
+}
+
+/* Reflection lines are duplicated, so moving by half the set loops seamlessly (10 lines × 5px). */
+@keyframes dev-scroll {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50px); }
+}
+
+@keyframes dev-glow {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+@keyframes dev-type {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes dev-sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2.5deg); }
+}
+
+@keyframes dev-logo {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 1; }
+}
+
+@keyframes dev-token {
+  0% { opacity: 0; transform: translateY(12px); }
+  20% { opacity: 0.85; }
+  70% { opacity: 0.5; }
+  100% { opacity: 0; transform: translateY(-34px); }
+}
+
+@keyframes dev-steam {
+  0% { stroke-dashoffset: 40; opacity: 0; transform: translateY(4px); }
+  30% { opacity: 1; }
+  100% { stroke-dashoffset: -40; opacity: 0; transform: translateY(-10px); }
+}
+
+/* Reduced motion: the global rule makes animations instant; show the resting scene. */
+@media (prefers-reduced-motion: reduce) {
+  .dev-token,
+  .dev-steam {
+    animation: none !important;
+    opacity: 0.6;
+  }
+}
