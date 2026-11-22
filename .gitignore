@@ -26,3 +26,5 @@ dist-ssr
 # Python virtual env (not part of the React app)
 .venv
 
+.vercel
+.env*.local
