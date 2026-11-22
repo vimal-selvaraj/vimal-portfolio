@@ -12,12 +12,12 @@ import './ProjectVisual.css'
 function CrmVisual() {
   return (
     <div className="pv-crm">
-      <aside className="pv-side">
+      <div className="pv-side">
         <span className="pv-logo" />
         {[0, 1, 2, 3, 4].map((i) => (
           <span key={i} className={`pv-side-item ${i === 1 ? 'is-active' : ''}`} />
         ))}
-      </aside>
+      </div>
       <div className="pv-main">
         <div className="pv-tabs">
           {['Unit A', 'Unit B', 'Unit C', 'Unit D'].map((t, i) => (

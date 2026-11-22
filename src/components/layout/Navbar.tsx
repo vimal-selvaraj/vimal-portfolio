@@ -5,7 +5,11 @@ import { navItems, profile } from '../../data/portfolio'
 import { useActiveSection } from '../../hooks/useActiveSection'
 import './Navbar.css'
 
-const sectionIds = navItems.map((n) => n.id)
+/*
+ * Also observe sections that have no menu entry (Learning), so the highlight clears
+ * while they're on screen instead of sticking to the previous item.
+ */
+const sectionIds = [...navItems.map((n) => n.id), 'learning']
 
 export function Navbar() {
   const active = useActiveSection(sectionIds)

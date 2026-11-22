@@ -28,7 +28,8 @@ export function ScrollText({ text, className = '' }: { text: string; className?:
     )
 
   return (
-    <p ref={ref} className={className} aria-label={text}>
+    <p ref={ref} className={className}>
+      <span className="sr-only">{text}</span>
       <span aria-hidden="true">
         {words.map((w, i) => (
           <Word key={i} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]}>

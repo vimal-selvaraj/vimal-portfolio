@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="theme-color" content="#07080a" />
 
     <title>Vimal Selvaraj — Full-Stack Developer | ReactJS · NodeJS · PostgreSQL</title>
@@ -12,6 +13,35 @@
       content="Vimal Selvaraj is a Full-Stack Developer with 5+ years of experience building scalable enterprise applications with ReactJS, TypeScript, NodeJS, ExpressJS and PostgreSQL."
     />
     <meta name="author" content="Vimal Selvaraj" />
+
+    <!-- Social previews. Set VITE_SITE_URL in .env to the deployed origin so crawlers get absolute URLs. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Vimal Selvaraj" />
+    <meta property="og:title" content="Vimal Selvaraj — Full-Stack Developer" />
+    <meta
+      property="og:description"
+      content="Full-Stack Developer with 5+ years building scalable enterprise applications with ReactJS, TypeScript, NodeJS and PostgreSQL."
+    />
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
+    <meta property="og:image" content="%VITE_SITE_URL%/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Vimal Selvaraj — Engineering Scalable Digital Experiences" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Vimal Selvaraj — Full-Stack Developer" />
+    <meta name="twitter:image" content="%VITE_SITE_URL%/og-image.png" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Vimal Selvaraj",
+        "jobTitle": "Full-Stack Developer",
+        "sameAs": ["https://www.linkedin.com/in/vimal-selvaraj-5b0716251"],
+        "knowsAbout": ["ReactJS", "TypeScript", "NodeJS", "ExpressJS", "PostgreSQL"],
+        "alumniOf": "Anna University"
+      }
+    </script>
 
     <!-- Fonts: Inter (body), Inter Tight (display), Instrument Serif (editorial accents), JetBrains Mono (labels) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,6 +52,12 @@
     />
   </head>
   <body>
+    <noscript>
+      <p style="padding: 2rem; font-family: system-ui, sans-serif; color: #f2f3f5; background: #07080a">
+        Vimal Selvaraj — Full-Stack Developer. This portfolio needs JavaScript; you can also
+        <a href="/resume/Vimal_Selvaraj_Resume.pdf" style="color: #3ee0ff">download the resume (PDF)</a>.
+      </p>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

@@ -1,78 +1,64 @@
-# React + TypeScript + Vite
+# Vimal Selvaraj — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio of **Vimal Selvaraj**, Full-Stack Developer (ReactJS · NodeJS · PostgreSQL).
+A single-page, motion-driven site built with React 19, TypeScript, Vite and Motion.
 
-Currently, two official plugins are available:
+## Getting started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
+npm run dev       # local dev server
+npm run build     # type-check + production build into dist/
+npm run preview   # serve the production build locally
+npm run lint
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Editing content
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+All copy lives in **`src/data/portfolio.ts`** — profile, experience, projects, achievements,
+learning and contact details. Components only render what is defined there, so most updates
+never touch a component.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **Resume:** replace `public/resume/Vimal_Selvaraj_Resume.pdf` (keep the file name, or update
+  `profile.resume` / `profile.resumeFileName`).
+- **Photo:** put an image in `public/` and set `profile.photo` (e.g. `'/profile.jpg'`); until then
+  the hero shows a monogram.
+- **Design tokens:** colours, type scale, spacing and motion timing are in `src/styles/tokens.css`.
+
+## Project structure
 
 ```
+src/
+  data/portfolio.ts        single source of truth for content
+  styles/                  tokens + global styles
+  components/layout/       Navbar, Footer, BackgroundGrid
+  components/ui/           SectionHeading, Reveal, ScrollText, MagneticLink
+  sections/                Hero, About, Skills, Experience, Projects, Achievements, Learning, Contact
+  hooks/useActiveSection   scroll-spy for the navigation
+public/                    favicon, social image, resume, robots.txt
+```
+
+Project illustrations (`sections/Projects/ProjectVisual.tsx`) are abstract, brand-free compositions
+built in CSS — they intentionally never reproduce real client product screens.
+
+## Deploying
+
+The build output in `dist/` is a fully static site with no client-side routes, so it can be served
+from any static host (Vercel, Netlify, Cloudflare Pages, GitHub Pages, S3…). Build command
+`npm run build`, output directory `dist`.
+
+Before deploying, set the public origin in **`.env`** so social previews (LinkedIn, X, Slack)
+get absolute image URLs:
+
+```bash
+VITE_SITE_URL=https://your-domain.example
+```
+
+Most hosts also let you set `VITE_SITE_URL` as a build-time environment variable instead.
+
+## Accessibility & motion
+
+- Every animation honours `prefers-reduced-motion`; illustrations pause while off screen.
+- Skip link, landmark sections, keyboard-operable tabs and accordions, visible focus styles.
+- Checked with axe-core: the only reported items are the decorative, screen-reader-hidden
+  skills marquee (intentionally low contrast).

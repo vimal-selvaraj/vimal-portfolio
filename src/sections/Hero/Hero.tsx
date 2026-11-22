@@ -45,11 +45,12 @@ function TypedLine({ text, delay }: { text: string; delay: number }) {
   return (
     <motion.p
       className="hero__typed mono"
-      aria-label={text}
       initial="hidden"
       animate="show"
       variants={{ hidden: {}, show: { transition: { staggerChildren: 0.028, delayChildren: delay } } }}
     >
+      {/* aria-label isn't allowed on a plain <p>, so screen readers get the sentence as hidden text */}
+      <span className="sr-only">{text}</span>
       <span className="hero__typed-prompt" aria-hidden="true">
         &gt;
       </span>

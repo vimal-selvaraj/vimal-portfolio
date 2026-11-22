@@ -30,7 +30,8 @@ function Stat({ item, index }: { item: Achievement; index: number }) {
   const full = `${item.prefix ?? ''}${item.value}${item.suffix}`
   return (
     <Reveal as="li" className="stat" delay={index * 0.08}>
-      <p className="stat__value" aria-label={full}>
+      <p className="stat__value">
+        <span className="sr-only">{full}</span>
         <span aria-hidden="true">
           {item.prefix && <span className="stat__affix">{item.prefix}</span>}
           <CountUp value={item.value} />
