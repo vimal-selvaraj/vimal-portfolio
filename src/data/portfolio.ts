@@ -39,23 +39,36 @@ export const hero = {
   description:
     'I build scalable enterprise applications by combining modern frontend engineering, robust backend architecture, and efficient data systems.',
   floatingTech: ['React 18', 'TypeScript', 'NodeJS', 'ExpressJS', 'PostgreSQL', 'Redux Toolkit', 'Docker', 'Pinecone'],
+  /** The layered architecture described in the resume: UI → API gateway → back-end APIs → database. */
+  systemPath: [
+    { layer: 'UI', tech: 'React · TypeScript' },
+    { layer: 'Gateway', tech: 'Node · Express' },
+    { layer: 'Services', tech: 'REST · RBAC · SSO' },
+    { layer: 'Data', tech: 'PostgreSQL' },
+  ],
+  meta: { current: 'Vega Intellisoft', client: 'Saint-Gobain' },
 }
 
+export type HighlightIcon = 'years' | 'fullstack' | 'architecture' | 'workflow' | 'database' | 'ai'
+
 export const about = {
-  paragraphs: [
+  title: ['From business requirements', 'to maintainable systems.'],
+  statement:
     'With 5+ years of experience in software development, I specialize in building scalable enterprise applications and workflow-driven platforms.',
+  paragraphs: [
     'My experience spans frontend architecture, backend API development, database optimization, authentication systems, and multi-tenant application design.',
     'I have worked on enterprise CRM platforms, ticketing systems, configurable service catalogs, analytics dashboards, and AI-powered knowledge management solutions.',
     'I enjoy solving complex engineering challenges and transforming business requirements into maintainable, high-performance applications.',
   ],
   highlights: [
-    '5+ years of experience',
-    'Full-stack development',
-    'Enterprise application architecture',
-    'Workflow automation',
-    'Database optimization',
-    'AI-based knowledge retrieval',
-  ],
+    { label: '5+ years of experience', icon: 'years' },
+    { label: 'Full-stack development', icon: 'fullstack' },
+    { label: 'Enterprise application architecture', icon: 'architecture' },
+    { label: 'Workflow automation', icon: 'workflow' },
+    { label: 'Database optimization', icon: 'database' },
+    { label: 'AI-based knowledge retrieval', icon: 'ai' },
+  ] satisfies { label: string; icon: HighlightIcon }[],
+  previously: ['Rezolve.ai', 'Colan Infotech'],
 }
 
 export type SkillGroup = { id: string; title: string; caption: string; items: string[] }
